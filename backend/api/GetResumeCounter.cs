@@ -1,49 +1,37 @@
-using System.Net;
-using System.Net.Http;
-using System.Text;
+using System;
+using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 
 namespace Company.Function
 {
     public static class GetResumeCounter
     {
         [FunctionName("GetResumeCounter")]
-        public static async Task<HttpResponseMessage> Run(
+        public static HttpResponseMessage Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            [CosmosDB(
-                databaseName: "AzureResume",
-                collectionName: "Counter",
-                ConnectionStringSetting = "AzureResumeConnectionString",
-                Id = "1",
-                PartitionKey = "1")] Counter counter,
-            [CosmosDB(
-                databaseName: "AzureResume",
-                collectionName: "Counter",
-                ConnectionStringSetting = "AzureResumeConnectionString",
-                Id = "1",
-                PartitionKey = "1")] IAsyncCollector<Counter> counterCollector,
+            [CosmosDB(databaseName:"AzureResume", collectionName: "Counter", ConnectionStringSetting = "AzureResumeConnectionString", Id = "1", PartitionKey = "1")] Counter counter,
+            [CosmosDB(databaseName:"AzureResume", collectionName: "Counter", ConnectionStringSetting = "AzureResumeConnectionString", Id = "1", PartitionKey = "1")] out Counter updatedCounter,
+
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            // Increment the counter
-            counter.Count++;
+            updatedCounter = counter;
+            updatedCounter.Count += 1;
 
-            // Update the counter in the database
-            await counterCollector.AddAsync(counter);
+            var jsonToReturn = JsonConvert.SerializeObject(counter);
 
-            // Serialize the counter object to JSON
-            string jsonToReturn = JsonConvert.SerializeObject(counter);
-
-            // Return the response with the counter JSON
-            return new HttpResponseMessage(HttpStatusCode.OK)
+            return new HttpResponseMessage(System.Net.HttpStatusCode.OK)
             {
-                Content = new StringContent(jsonToReturn, Encoding.UTF8, "application/json")
+                Content = new StringContent (jsonToReturn, Encoding.UTF8, "application/json")
             };
         }
     }
