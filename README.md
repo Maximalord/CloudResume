@@ -4,6 +4,7 @@ my own staic hosted resume supported by Azure, following [ACloudGurur project vi
 
 This is my Cloud Resume Challenge built on Azure. It's a static website hosted on Azure Storage, with a visitor counter built on Azure Functions. The website is built with HTML, CSS, and JavaScript. The visitor counter is built with .NET and Azure Functions. 
 
+check out [here](https://www.nikhilkumargupta.in/)
 
 ## Pre-requisites
 
