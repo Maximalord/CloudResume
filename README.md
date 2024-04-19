@@ -14,13 +14,6 @@ check out [here](https://www.nikhilkumargupta.in/)
 4. Or you can avoid most of the headache by using the containers provided graciously by GPS [HERE](https://github.com/madebygps/azure-resume?tab=readme-ov-file)
    
 
-## Structure
-
-- `frontend/`: Folder contains the website.
-    - `main.js`: Folder contains visitor counter code.
-- `api/`: Folder contains the dotnet API deployed on Azure Functions.
-    - `Counter.cs`: Contains the visitor counter code.
-- `.github/workflows/`: Folder contains CI/CD workflow configurations.
 
 ## Frontend 
 
