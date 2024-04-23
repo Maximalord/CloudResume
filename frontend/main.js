@@ -2,26 +2,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
     getVisitCount();
 });
 
-const functionApiUrl = 'https://getresumecounter24.azurewebsites.net/api/GetResumeCounter?code=YzwnVymPGlaCIhjzWST9fShlSqJ6xlUYs22v6ZLyBPc_AzFuZxmSBQ=='
-const localFunctionApi = 'http://localhost:7071/api/GetResumeCounter';
+const functionApiUrl = 'http://localhost:7071/api/GetResumeCounter';
 
 const getVisitCount = () => {
-    fetch(functionApiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(response => {
+    let count = 30;
+    fetch(functionApiUrl).then(response => {
+            return response.json()
+    }).then(response => {
             console.log("Website called function API.");
-            const count = response.count;
+            count = response.count;
             document.getElementById("counter").innerText = count;
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
+        }).catch(function(error){
+            console.log(error);
         });
-};
-
-
-
+        return count;
+}
