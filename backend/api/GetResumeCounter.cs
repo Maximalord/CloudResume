@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
-//lookout for dependencies
+//lookout for dependencies..
 
 namespace Company.Function
 {
